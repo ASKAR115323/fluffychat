@@ -7,11 +7,9 @@ workflows:
     scripts:
       - name: Install Rust
         script: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
--s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source "$HOME/.cargo/env"
-          echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> 
-$FCI_BUILD_DIR/.cargo_env
+          echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> $FCI_BUILD_DIR/.cargo_env
       - name: Get packages
         script: |
           source "$HOME/.cargo/env" 2>/dev/null || true
