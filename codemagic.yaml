@@ -5,9 +5,20 @@ workflows:
       flutter: stable
       xcode: latest
     scripts:
+      - name: Install Rust
+        script: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+-s -- -y
+          source "$HOME/.cargo/env"
+          echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> 
+$FCI_BUILD_DIR/.cargo_env
       - name: Get packages
-        script: flutter pub get
+        script: |
+          source "$HOME/.cargo/env" 2>/dev/null || true
+          flutter pub get
       - name: Build iOS without signing
-        script: flutter build ios --release --no-codesign
+        script: |
+          source "$HOME/.cargo/env" 2>/dev/null || true
+          flutter build ios --release --no-codesign
     artifacts:
       - build/ios/iphoneos/*.app
